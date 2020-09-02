@@ -4,8 +4,28 @@
   "description": "Nuxt Authentication Template",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "build:stats": "webpack --env production --json > stats.json",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --ignore-pattern test/ .",
+    "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore --ignore-pattern test/ .",
+    "precommit": "npm run lint",
+    "test": "test"
   },
-  "author": "Julian Boralli",
+  "author": "JulianBoralli <jboralli@icloud.com>",
+  "dependencies": {
+    "nuxt": "^2.14.4"
+  },
+  "devDependencies": {
+    "@nuxtjs/style-resources": "^1.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.6.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2"
+  },
   "license": "ISC"
 }
