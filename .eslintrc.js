@@ -3,7 +3,8 @@ module.exports = {
 
   env: {
     browser: true,
-    node: true
+    node: true,
+    'jest/globals': true
   },
 
   parserOptions: {
@@ -12,7 +13,7 @@ module.exports = {
 
   extends: ['eslint:recommended', 'plugin:vue/recommended'],
 
-  plugins: ['vue'],
+  plugins: ['vue', 'jest'],
 
   rules: {
     semi: [2, 'never'],
