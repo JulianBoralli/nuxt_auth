@@ -1,17 +1,16 @@
-import SignUpForm from 'components/SignUpForm.vue'
+import SignInForm from 'components/SignInForm.vue'
 import { mount } from '@vue/test-utils'
 
 let wrapper
 
 beforeEach(() => {
-  wrapper = mount(SignUpForm)
+  wrapper = mount(SignInForm)
 })
 
 describe('rendered content', () => {
-
-  test('form renders all 4 required input fields', () => {
+  test('form renders two required input fields', () => {
     const inputs = wrapper.findAll('input')
-    expect(inputs.length).toBe(4)
+    expect(inputs.length).toBe(2)
   })
 
   test('form renders submit button', () => {
@@ -21,30 +20,26 @@ describe('rendered content', () => {
 })
 
 describe('behavior', () => {
-  test('calls signUp function with form input data on submit', async () => {
-    const signUpSpy = jest.spyOn(wrapper.vm, 'signUp')
+  test('calls signIn function with form input data on submit', async () => {
+    const signInSpy = jest.spyOn(wrapper.vm, 'signIn')
 
     const validInputData = {
-      username: 'not_chuck_norris',
-      email: 'test@ncn.com',
-      password: 'password',
-      passwordConf: 'password'
+      email: 'ncn@codejam.co.uk',
+      password: 'nuckChorris'
     }
-    
+
     const expectedData = expect.objectContaining(validInputData)
 
     // fill in form data (using element data properties to indicate input types)
     await wrapper
       .findAll('input').wrappers
-      .map(input => 
-        input.setValue(validInputData[input.element.dataset.fieldType])
-      )
+      .map(input => input.setValue(validInputData[input.element.dataset.fieldType]))
     // trigger submit event
     await wrapper
       .find('form')
       .trigger('submit')
     
-
-    expect(signUpSpy).toHaveBeenCalledWith(expectedData)
-  })  
+    expect(signInSpy).toHaveBeenCalledWith(expectedData)
+  })
 })
+
