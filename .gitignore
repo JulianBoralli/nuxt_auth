@@ -6,3 +6,6 @@ node_modules/
 
 # Nuxt Build
 .nuxt/
+
+# vscode config
+.vscode/
