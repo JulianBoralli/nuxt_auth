@@ -1,3 +1,11 @@
+const initialState = () => ({
+  user: null,
+  auth: {
+    headers: null
+  }
+})
+
+
 const mutations = {
   updateUser(state, user) {
     state.user = user
@@ -5,10 +13,16 @@ const mutations = {
 
   updateAuth(state, authHeaders) {
     state.auth.headers = authHeaders
-    if (!state.auth.isLoggedIn) { state.auth.isLoggedIn = true }
   }
 }
 
+const getters = {
+  isLoggedIn: state => !!state.user,
+  authHeaders: state => state.auth.headers
+}
+
 export default {
-  mutations
+  state: initialState,
+  mutations,
+  getters
 }

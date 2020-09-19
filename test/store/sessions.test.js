@@ -1,11 +1,13 @@
 import sessions from 'store/sessions.js'
-const { mutations } = sessions
+import { context, api } from './helpers.js'
+
+const { mutations, getters } = sessions
 const { updateUser, updateAuth } = mutations
+const { isLoggedIn } = getters
 
 const initialState = () => ({
   user: null,
   auth: {
-    isLoggedIn: false,
     headers: null
   }
 })
@@ -17,17 +19,38 @@ const authHeaders = {
 }
 
 describe('sessions module: mutations', () => {
-  test('updateUser mutates the user property', () => {
+  test('updateUser sets the user property', () => {
     const state = initialState()
     updateUser(state, user)
     expect(state.user).toEqual(user)
   })
 
-  test('updateAuth mutates the auth headers and sets the isLoggedIn prop', () => {
+  test('updateAuth sets the auth headers', () => {
     const state = initialState()
     updateAuth(state, authHeaders)
 
     expect(state.auth.headers).toEqual(authHeaders)
-    expect(state.auth.isLoggedIn).toBe(true)
+  })
+})
+
+describe('sessions module: getters', () => {
+  test('isLoggedIn returns true if user is set, and false otherwise', () => {
+    const state = initialState()
+    expect(isLoggedIn(state)).toBe(false)
+    
+    updateUser(state, user)
+    expect(isLoggedIn(state)).toBe(true)
+  })
+})
+
+describe('sessions module: actions', () => {
+  describe('SignUp', () => {
+    test('calls api post method with form data', async () => {
+      const signUpSpy = jest.spyOn(api, 'post')
+      const formData = {...user, password: 'notpassword' }
+      await signUp(context, formData)
+      
+      expect(signUpSpy).toHaveBeenCalledWith(formData)
+    })
   })
 })
