@@ -1,24 +1,29 @@
 const initialState = () => ({
-  user: null,
-  auth: {
-    headers: null
-  }
-})
-
+  auth: null
+})  
 
 const mutations = {
-  updateUser(state, user) {
-    state.user = user
-  },
-
-  updateAuth(state, authHeaders) {
-    state.auth.headers = authHeaders
+  updateAuth(state, authObj) {
+    state.auth = authObj
   }
 }
 
+export const actions = (api) => ({
+  signUp({commit}, form) {
+    api.post(form)
+      .then(r => commit('updateAuth', r.data))
+      .catch(e => e)
+  },
+  signIn({commit}, form) {
+    api.post(form)
+      .then(r => commit('updateAuth', r.data))
+      .catch(e => e)
+  }
+})
+
 const getters = {
-  isLoggedIn: state => !!state.user,
-  authHeaders: state => state.auth.headers
+  isLoggedIn: state => !!state.auth,
+  auth: state => state.auth
 }
 
 export default {
