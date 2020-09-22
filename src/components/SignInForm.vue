@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex' 
+
 export default {
   data() {
     return {
@@ -19,9 +21,12 @@ export default {
     }
   },
   methods: {
-    signIn(formData) {
-      return formData
-    }
+    ...mapActions({
+      signIn: 'sessions/signIn'
+    })
+    // signIn(formData) {
+    //   return formData
+    // }
   }
 }
 </script>
