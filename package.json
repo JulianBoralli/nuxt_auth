@@ -16,6 +16,7 @@
   },
   "author": "JulianBoralli <jboralli@icloud.com>",
   "dependencies": {
+    "@nuxt/http": "^0.5.12",
     "nuxt": "^2.14.4"
   },
   "devDependencies": {
@@ -37,12 +38,14 @@
   },
   "babel": {
     "presets": [
-      ["@babel/preset-env",
-      {
-        "targets": {
-          "esmodules": true
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "esmodules": true
+          }
         }
-      }]
+      ]
     ]
   },
   "license": "ISC"
