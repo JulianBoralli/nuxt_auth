@@ -1,4 +1,4 @@
-import { actions } from 'store/sessions.js'
+import { createActions } from 'store/sessions.js'
 import sessions from 'store/sessions.js'
 const { mutations, getters } = sessions
 
@@ -17,7 +17,7 @@ const mockSessionsApi = api(mockApiResponse)
 
 const { updateAuth } = mutations
 const { isLoggedIn } = getters
-const { signUp, signIn } = actions(mockSessionsApi)
+const { signUp, signIn } = createActions(mockSessionsApi)
 
 describe('sessions module: mutations', () => {
   test('updateAuth sets the auth prop', () => {
@@ -40,12 +40,12 @@ describe('sessions module: getters', () => {
 
 describe('sessions module: actions', () => {
   describe('signUp', () => {
-    test('calls api post method with form data', async () => {
+    test('calls api post method with correct endpoint and form data', async () => {
       const signUpSpy = jest.spyOn(mockSessionsApi, 'post')
       const formData = {username: 'hiccuphh3', password: 'notpassword' }
       await signUp(context, formData)
       
-      expect(signUpSpy).toHaveBeenCalledWith(formData)
+      expect(signUpSpy).toHaveBeenCalledWith('/signup.json', formData)
       signUpSpy.mockRestore()
     })
     test('commits updateAuth with expected payload', async () => {
@@ -57,12 +57,12 @@ describe('sessions module: actions', () => {
     })
   })
   describe('signIn', () => {
-    test('calls api post method with form data', async () => {
+    test('calls api post method with correct endpoint and form data', async () => {
       const signInSpy = jest.spyOn(mockSessionsApi, 'post')
       const formData = { email: 'hhh3@isleofberk.com', password: 'password' }
       await signIn(context, formData)
 
-      expect(signInSpy).toHaveBeenCalledWith(formData)
+      expect(signInSpy).toHaveBeenCalledWith('/login.json', formData)
       signInSpy.mockRestore()
     })
     test('commits updateAuth with expected payload', async () => {
