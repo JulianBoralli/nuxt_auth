@@ -1,10 +1,12 @@
 <template>
-  <h1>Hello Nuxt Auth</h1>
+  <sign-in-form />
 </template>
 
 <script>
-export default {
+import SignInForm from '~/components/SignInForm.vue'
 
+export default {
+  components: { SignInForm }
 }
 </script>
 
