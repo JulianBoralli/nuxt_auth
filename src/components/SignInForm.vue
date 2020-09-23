@@ -3,11 +3,21 @@
     <form @submit.prevent="signIn(form)">
       <section>
         <label for="email">email</label>
-        <input v-model="form.email" type="text" data-field-type="email">
+        <input
+          id="email"
+          v-model="form.email"
+          type="text"
+          data-field-type="email"
+        >
       </section>
       <section>
         <label for="password">password</label>
-        <input v-model="form.password" type="password" data-field-type="password">        
+        <input
+          id="password"
+          v-model="form.password"
+          type="password"
+          data-field-type="password"
+        >
       </section>
       <button type="submit">sign in</button>
     </form>

@@ -17,7 +17,6 @@ export const context = {
 }
 
 export const api = r => ({
-  post: () => Promise.resolve(r),
-  get: () => Promise.resolve(r),
-  patch: () => Promise.resolve()
+  $post: () => Promise.resolve(r),
+  $get: () => Promise.resolve(r),
 })

@@ -1,23 +1,25 @@
-import { createActions } from 'store/sessions.js'
-import sessions from 'store/sessions.js'
-const { mutations, getters } = sessions
-
 import { context, api } from './helpers.js'
-
-const initialState = () => ({
-  auth: null
-})
+import sessions from 'store/sessions.js'
+const { mutations, actions, getters } = sessions
 
 const mockApiResponse = { 
   data:{
     token: 'LpzPSN3Vu6eefxPUXX9QVCU4'
   }
 }
-const mockSessionsApi = api(mockApiResponse)
+
+// mock $http dependency
+const mockApi = api(mockApiResponse)
+actions.$http = mockApi
+
+const initialState = () => ({
+  auth: null
+})
 
 const { updateAuth } = mutations
 const { isLoggedIn } = getters
-const { signUp, signIn } = createActions(mockSessionsApi)
+// const { signUp, signIn } = actions
+
 
 describe('sessions module: mutations', () => {
   test('updateAuth sets the auth prop', () => {
@@ -41,16 +43,16 @@ describe('sessions module: getters', () => {
 describe('sessions module: actions', () => {
   describe('signUp', () => {
     test('calls api post method with correct endpoint and form data', async () => {
-      const signUpSpy = jest.spyOn(mockSessionsApi, 'post')
+      const signUpSpy = jest.spyOn(actions.$http, '$post')
       const formData = {username: 'hiccuphh3', password: 'notpassword' }
-      await signUp(context, formData)
+      await actions.signUp(context, formData)
       
       expect(signUpSpy).toHaveBeenCalledWith('/signup.json', formData)
       signUpSpy.mockRestore()
     })
     test('commits updateAuth with expected payload', async () => {
       const contextSpy = jest.spyOn(context, 'commit')
-      await signUp(context, {})
+      await actions.signUp(context, {})
 
       expect(contextSpy).toHaveBeenCalledWith('updateAuth', mockApiResponse.data)
       contextSpy.mockRestore()
@@ -58,16 +60,16 @@ describe('sessions module: actions', () => {
   })
   describe('signIn', () => {
     test('calls api post method with correct endpoint and form data', async () => {
-      const signInSpy = jest.spyOn(mockSessionsApi, 'post')
+      const signInSpy = jest.spyOn(actions.$http, '$post')
       const formData = { email: 'hhh3@isleofberk.com', password: 'password' }
-      await signIn(context, formData)
+      await actions.signIn(context, formData)
 
       expect(signInSpy).toHaveBeenCalledWith('/login.json', formData)
       signInSpy.mockRestore()
     })
     test('commits updateAuth with expected payload', async () => {
       const contextSpy = jest.spyOn(context, 'commit')
-      await signIn(context, {})
+      await actions.signIn(context, {})
       
       expect(contextSpy).toHaveBeenCalledWith('updateAuth', mockApiResponse.data)
       contextSpy.mockRestore()
