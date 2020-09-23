@@ -21,15 +21,15 @@ describe('rendered content', () => {
 
 describe('behavior', () => {
   test('calls signIn function with form input data on submit', async () => {
-    const signInSpy = jest.spyOn(wrapper.vm, 'signIn')
+    // const signInSpy = jest.spyOn(wrapper.vm, 'signIn')
+    // mock signIn function 
+    wrapper.vm.signIn = jest.fn()
 
     const validInputData = {
       email: 'ncn@codejam.co.uk',
       password: 'nuckChorris'
     }
-
     const expectedData = expect.objectContaining(validInputData)
-
     // fill in form data (using element data properties to indicate input types)
     await wrapper
       .findAll('input').wrappers
@@ -39,7 +39,7 @@ describe('behavior', () => {
       .find('form')
       .trigger('submit')
     
-    expect(signInSpy).toHaveBeenCalledWith(expectedData)
+    expect(wrapper.vm.signIn).toHaveBeenCalledWith(expectedData)
   })
 })
 
