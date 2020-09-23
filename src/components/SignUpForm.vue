@@ -25,7 +25,8 @@
 </template>
 
 <script>
-// think about using mapActions signUp function from sessions module  
+import { mapActions } from 'vuex' 
+
 export default {
   data() {
     return {
@@ -37,10 +38,8 @@ export default {
       }
     }
   },
-  methods: {  
-    signUp(formData) {
-      return formData
-    }
+  methods: {
+    ...mapActions({ signUp: 'sessions/signUp'})  
   }
 }
 </script>
