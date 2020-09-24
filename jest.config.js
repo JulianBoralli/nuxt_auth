@@ -12,7 +12,8 @@ module.exports = {
   },
   moduleNameMapper: {
     '^pages(.*)$': '<rootDir>/src/pages$1',
-    '^components(.*)$': '<rootDir>/src/components$1'
+    '^components(.*)$': '<rootDir>/src/components$1',
+    '^store(.*)$': '<rootDir>/src/store$1'
   },
   verbose: true
 }

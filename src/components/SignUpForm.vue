@@ -25,6 +25,7 @@
 </template>
 
 <script>
+// think about using mapActions signUp function from sessions module  
 export default {
   data() {
     return {
