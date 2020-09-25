@@ -4,7 +4,10 @@ const initialState = () => ({
 
 const mutations = {
   updateAuth(state, authObj) {
+    // set state
     state.auth = authObj
+    // set header
+    // set cookie
   }
 }
 

@@ -21,6 +21,7 @@ export default {
   },
 
   plugins: [
+    '~/plugins/http'
   ],
 
   modules: [
