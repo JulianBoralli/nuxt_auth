@@ -21,6 +21,7 @@ export default {
   },
 
   plugins: [
+    {src: '@/plugins/railsAuthApi.js', ssr: true}
   ],
 
   modules: [

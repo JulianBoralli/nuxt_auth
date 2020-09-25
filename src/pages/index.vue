@@ -3,6 +3,8 @@
     <h1>Hello Nuxt Auth</h1>
     <app-sign-in-form></app-sign-in-form>
     <button @click="logout">Logout</button>
+    <button @click="testCallStore">testCallStore</button>
+    <button @click="testCallComponent">testCallComponent</button>
   </main>
 </template>
 
@@ -19,6 +21,16 @@ export default {
     logout() {
       console.log('Logout')
       Cookie.remove('email')
+    },
+    testCallStore() {
+      console.log('testCallStore Click')
+      this.$store.dispatch('sessions/testCall')
+    },
+    testCallComponent() {
+      console.log('testCallComponent Click')
+      this.$railsAuthApi.get('')
+        .then(r => console.log('testCallComponent Response', r))
+        .catch(e => console.log('testCallComponent Error', e))
     }
   }
 }

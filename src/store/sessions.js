@@ -8,18 +8,23 @@ const mutations = {
   }
 }
 
-export const actions = (api) => ({
+const actions = {
   signUp({commit}, form) {
-    api.post(form)
+    this.$railsAuthApi.post('signup', form)
       .then(r => commit('updateAuth', r.data))
       .catch(e => e)
   },
   signIn({commit}, form) {
-    api.post(form)
+    this.$railsAuthApi.post('login', form)
       .then(r => commit('updateAuth', r.data))
       .catch(e => e)
+  },
+  testCall() {
+    this.$railsAuthApi.get('')
+      .then(r => console.log('testCallStore Response', r))
+      .catch(e => console.log('testCallStore Error', e))
   }
-})
+}
 
 const getters = {
   isLoggedIn: state => !!state.auth,
@@ -29,5 +34,6 @@ const getters = {
 export default {
   state: initialState,
   mutations,
-  getters
+  getters,
+  actions
 }
