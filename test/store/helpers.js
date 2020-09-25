@@ -19,4 +19,5 @@ export const context = {
 export const api = r => ({
   $post: () => Promise.resolve(r),
   $get: () => Promise.resolve(r),
+  setToken: token => ({ headers: {authorization: `Bearer ${token}` } })
 })

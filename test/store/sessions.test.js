@@ -8,39 +8,49 @@ const mockApiResponse = {
   }
 }
 
-// mock $http dependency
 const mockApi = api(mockApiResponse)
-actions.$http = mockApi
 
 const initialState = () => ({
   auth: null
 })
 
-const { updateAuth } = mutations
 const { isLoggedIn } = getters
-// const { signUp, signIn } = actions
 
+let state
+beforeEach(() => {
+  state = initialState()
+}) 
 
 describe('sessions module: mutations', () => {
+  // mock $http dependency
+  mutations.$http = mockApi
+
   test('updateAuth sets the auth prop', () => {
-    const state = initialState()
-    updateAuth(state, mockApiResponse.data)
+    mutations.updateAuth(state, mockApiResponse.data)
 
     expect(state.auth).toEqual(mockApiResponse.data)
+  })
+  test('updateAuth sets authorization headers with auth token', () => {
+    const setTokenSpy = jest.spyOn(mutations.$http, 'setToken')
+    mutations.updateAuth(state, mockApiResponse.data)
+
+    expect(setTokenSpy).toHaveBeenCalledWith(state.auth.token, 'Bearer')
   })
 })
 
 describe('sessions module: getters', () => {
   test('isLoggedIn returns true if auth is set, and false otherwise', () => {
-    const state = initialState()
     expect(isLoggedIn(state)).toBe(false)
     
-    updateAuth(state, mockApiResponse.data)
+    mutations.updateAuth(state, mockApiResponse.data)
     expect(isLoggedIn(state)).toBe(true)
   })
 })
 
 describe('sessions module: actions', () => {
+  // mock $http dependency
+  actions.$http = mockApi
+
   describe('signUp', () => {
     test('calls api post method with correct endpoint and form data', async () => {
       const signUpSpy = jest.spyOn(actions.$http, '$post')
