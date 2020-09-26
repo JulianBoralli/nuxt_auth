@@ -5,21 +5,34 @@ const initialState = () => ({
 const mutations = {
   updateAuth(state, authObj) {
     state.auth = authObj
+    // set header
+    this.$http.setToken(state.auth.token, 'Bearer')
+    // set cookie?
+  },
+  clearSession(state) {
+    state.auth = null
+    // clear header
+    this.$http.setToken(false)
   }
 }
 
-export const actions = (api) => ({
+const actions = {
   signUp({commit}, form) {
-    api.post(form)
-      .then(r => commit('updateAuth', r.data))
+    this.$http.$post('/signup.json', form)
+      .then(r => commit('updateAuth', r))
       .catch(e => e)
   },
   signIn({commit}, form) {
-    api.post(form)
-      .then(r => commit('updateAuth', r.data))
+    this.$http.$post('/login.json', form)
+      .then(r => commit('updateAuth', r))
+      .catch(e => e)
+  },
+  logOut({commit}) {
+    this.$http.$delete('/logout.json')
+      .then(() => commit('clearSession'))
       .catch(e => e)
   }
-})
+}
 
 const getters = {
   isLoggedIn: state => !!state.auth,
@@ -29,5 +42,6 @@ const getters = {
 export default {
   state: initialState,
   mutations,
+  actions,
   getters
 }

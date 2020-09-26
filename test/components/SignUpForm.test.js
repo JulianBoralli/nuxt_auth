@@ -22,7 +22,8 @@ describe('rendered content', () => {
 
 describe('behavior', () => {
   test('calls signUp function with form input data on submit', async () => {
-    const signUpSpy = jest.spyOn(wrapper.vm, 'signUp')
+    // mock signUp method
+    wrapper.vm.signUp = jest.fn()
 
     const validInputData = {
       username: 'not_chuck_norris',
@@ -45,6 +46,6 @@ describe('behavior', () => {
       .trigger('submit')
     
 
-    expect(signUpSpy).toHaveBeenCalledWith(expectedData)
+    expect(wrapper.vm.signUp).toHaveBeenCalledWith(expectedData)
   })  
 })

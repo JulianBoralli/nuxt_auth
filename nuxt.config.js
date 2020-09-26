@@ -21,11 +21,17 @@ export default {
   },
 
   plugins: [
+    '~/plugins/http'
   ],
 
   modules: [
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    '@nuxt/http'
   ],
+
+  http: {
+    baseUrl: 'http://localhost:3000/v1'
+  },
 
   buildModules: [
   ],

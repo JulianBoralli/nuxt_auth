@@ -17,7 +17,8 @@ export const context = {
 }
 
 export const api = r => ({
-  post: () => Promise.resolve(r),
-  get: () => Promise.resolve(r),
-  patch: () => Promise.resolve()
+  $post: () => Promise.resolve(r),
+  $get: () => Promise.resolve(r),
+  $delete: () => Promise.resolve({ message: 'Succefully logged out!' }),
+  setToken: token => ({ headers: { authorization: `Bearer ${token}` } })
 })
