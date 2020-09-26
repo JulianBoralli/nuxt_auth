@@ -8,6 +8,11 @@ const mutations = {
     // set header
     this.$http.setToken(state.auth.token, 'Bearer')
     // set cookie?
+  },
+  clearSession(state) {
+    state.auth = null
+    // clear header
+    this.$http.setToken(false)
   }
 }
 
@@ -20,6 +25,11 @@ const actions = {
   signIn({commit}, form) {
     this.$http.$post('/login.json', form)
       .then(r => commit('updateAuth', r.data))
+      .catch(e => e)
+  },
+  logOut({commit}) {
+    this.$http.$delete('/logout.json')
+      .then(() => commit('clearSession'))
       .catch(e => e)
   }
 }

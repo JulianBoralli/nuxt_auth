@@ -1,6 +1,6 @@
-import { context, api } from './helpers.js'
 import sessions from 'store/sessions.js'
 const { mutations, actions, getters } = sessions
+import { context, api } from './helpers.js'
 
 const mockApiResponse = { 
   data:{
@@ -24,7 +24,6 @@ beforeEach(() => {
 describe('sessions module: mutations', () => {
   // mock $http dependency
   mutations.$http = mockApi
-
   test('updateAuth sets the auth prop', () => {
     mutations.updateAuth(state, mockApiResponse.data)
 
@@ -35,6 +34,21 @@ describe('sessions module: mutations', () => {
     mutations.updateAuth(state, mockApiResponse.data)
 
     expect(setTokenSpy).toHaveBeenCalledWith(state.auth.token, 'Bearer')
+    setTokenSpy.mockRestore()
+  })
+  test('clearSession sets the auth prop to null', () => {
+    mutations.updateAuth(state, mockApiResponse.data)
+    expect(state.auth).toEqual(mockApiResponse.data)
+
+    mutations.clearSession(state)
+    expect(state.auth).toBe(null)
+  })
+  test('clearSession clears the authorization header', () => {
+    const clearHeaderSpy = jest.spyOn(mutations.$http, 'setToken')
+    mutations.clearSession(state)
+
+    expect(clearHeaderSpy).toHaveBeenCalledWith(false)
+    clearHeaderSpy.mockRestore()
   })
 })
 
@@ -82,6 +96,22 @@ describe('sessions module: actions', () => {
       await actions.signIn(context, {})
       
       expect(contextSpy).toHaveBeenCalledWith('updateAuth', mockApiResponse.data)
+      contextSpy.mockRestore()
+    })
+  })
+  describe('logOut', () => {
+    test('calls api delete method with correct endpoint', async () => {
+      const deleteSpy = jest.spyOn(actions.$http, '$delete')
+      await actions.logOut(context)
+
+      expect(deleteSpy).toHaveBeenCalledWith('/logout.json')
+      deleteSpy.mockRestore()
+    })
+    test('commits clearSession mutation', async () => {
+      const contextSpy = jest.spyOn(context, 'commit')
+      await actions.logOut(context)
+
+      expect(contextSpy).toHaveBeenCalledWith('clearSession')
       contextSpy.mockRestore()
     })
   })
