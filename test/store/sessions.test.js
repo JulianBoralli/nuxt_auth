@@ -2,11 +2,8 @@ import sessions from 'store/sessions.js'
 const { mutations, actions, getters } = sessions
 import { context, api } from './helpers.js'
 
-const mockApiResponse = { 
-  data:{
-    token: 'LpzPSN3Vu6eefxPUXX9QVCU4'
-  }
-}
+const mockApiResponse = { token: 'LpzPSN3Vu6eefxPUXX9QVCU4' }
+
 
 const mockApi = api(mockApiResponse)
 
@@ -25,20 +22,20 @@ describe('sessions module: mutations', () => {
   // mock $http dependency
   mutations.$http = mockApi
   test('updateAuth sets the auth prop', () => {
-    mutations.updateAuth(state, mockApiResponse.data)
+    mutations.updateAuth(state, mockApiResponse)
 
-    expect(state.auth).toEqual(mockApiResponse.data)
+    expect(state.auth).toEqual(mockApiResponse)
   })
   test('updateAuth sets authorization headers with auth token', () => {
     const setTokenSpy = jest.spyOn(mutations.$http, 'setToken')
-    mutations.updateAuth(state, mockApiResponse.data)
+    mutations.updateAuth(state, mockApiResponse)
 
     expect(setTokenSpy).toHaveBeenCalledWith(state.auth.token, 'Bearer')
     setTokenSpy.mockRestore()
   })
   test('clearSession sets the auth prop to null', () => {
-    mutations.updateAuth(state, mockApiResponse.data)
-    expect(state.auth).toEqual(mockApiResponse.data)
+    mutations.updateAuth(state, mockApiResponse)
+    expect(state.auth).toEqual(mockApiResponse)
 
     mutations.clearSession(state)
     expect(state.auth).toBe(null)
@@ -56,7 +53,7 @@ describe('sessions module: getters', () => {
   test('isLoggedIn returns true if auth is set, and false otherwise', () => {
     expect(isLoggedIn(state)).toBe(false)
     
-    mutations.updateAuth(state, mockApiResponse.data)
+    mutations.updateAuth(state, mockApiResponse)
     expect(isLoggedIn(state)).toBe(true)
   })
 })
@@ -78,7 +75,7 @@ describe('sessions module: actions', () => {
       const contextSpy = jest.spyOn(context, 'commit')
       await actions.signUp(context, {})
 
-      expect(contextSpy).toHaveBeenCalledWith('updateAuth', mockApiResponse.data)
+      expect(contextSpy).toHaveBeenCalledWith('updateAuth', mockApiResponse)
       contextSpy.mockRestore()
     })
   })
@@ -95,7 +92,7 @@ describe('sessions module: actions', () => {
       const contextSpy = jest.spyOn(context, 'commit')
       await actions.signIn(context, {})
       
-      expect(contextSpy).toHaveBeenCalledWith('updateAuth', mockApiResponse.data)
+      expect(contextSpy).toHaveBeenCalledWith('updateAuth', mockApiResponse)
       contextSpy.mockRestore()
     })
   })

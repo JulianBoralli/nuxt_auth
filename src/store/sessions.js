@@ -19,12 +19,12 @@ const mutations = {
 const actions = {
   signUp({commit}, form) {
     this.$http.$post('/signup.json', form)
-      .then(r => commit('updateAuth', r.data))
+      .then(r => commit('updateAuth', r))
       .catch(e => e)
   },
   signIn({commit}, form) {
     this.$http.$post('/login.json', form)
-      .then(r => commit('updateAuth', r.data))
+      .then(r => commit('updateAuth', r))
       .catch(e => e)
   },
   logOut({commit}) {
