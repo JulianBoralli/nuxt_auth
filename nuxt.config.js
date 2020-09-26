@@ -30,7 +30,7 @@ export default {
   ],
 
   http: {
-    baseUrl: 'http://localhost:300/v1'
+    baseUrl: 'http://localhost:3000/v1'
   },
 
   buildModules: [
