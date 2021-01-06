@@ -9,8 +9,6 @@
 </template>
 
 <script>
-const Cookie = process.client ? require('js-cookie') : undefined
-
 export default {
   data() {
     return {
@@ -23,8 +21,7 @@ export default {
   methods: {
     signIn(formData) {
       console.log('SignIn', formData.email)
-      Cookie.set('email',formData.email)
-      return formData
+      this.$store.dispatch('authentication/signIn', formData)
     }
   }
 }
