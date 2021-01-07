@@ -1,18 +1,33 @@
 <template>
   <main>
     <h1>Hello Nuxt Auth</h1>
-    <app-sign-in-form></app-sign-in-form>
-    <button @click="logout">Logout</button>
+    <template v-if="isLoggedIn"> 
+      <button>  <NuxtLink to="/admin">Admin Page</NuxtLink></button>
+      <button @click="logout">Logout</button>
+    </template>
+    <template v-else> 
+      <button>  <NuxtLink to="/authentication">Authentication Page</NuxtLink></button>
+    </template>
   </main>
 </template>
 
 <script>
-import SignInForm from '@/components/SignInForm'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
-    appSignInForm: SignInForm,
   },
+  data() {
+    return {
+      counter: 0
+    }
+  },
+  computed: {
+    ...mapGetters('authentication', [
+      'isLoggedIn'
+    ])
+  },
+
   methods: {
     logout() {
       console.log('Logout', document.cookie)

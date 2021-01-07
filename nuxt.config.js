@@ -21,7 +21,7 @@ export default {
   },
 
   plugins: [
-    {src: '@/plugins/railsAuthApi.js', ssr: true}
+    {src: '@/plugins/railsAuthApi.js'}
   ],
 
   modules: [
@@ -54,6 +54,17 @@ export default {
           exclude: /(node_modules)/
         })
       }
-    }
+    },
+    // extendPlugins(plugins) {
+    //   const pluginIndex = plugins.findIndex(
+    //     ({ src }) => src === '~/plugins/railsAuthApi.js'
+    //   )
+    //   const railsAuthApiPlugin = plugins[pluginIndex]
+  
+    //   plugins.splice(pluginIndex, 1)
+    //   plugins.unshift(railsAuthApiPlugin)
+  
+    //   return plugins
+    // }
   }
 }
