@@ -39,7 +39,8 @@ export default {
   },
   methods: {  
     signUp(formData) {
-      return formData
+      console.log('SignIn', formData.email)
+      this.$store.dispatch('authentication/signUp', formData)
     }
   }
 }

@@ -12,15 +12,26 @@ export default (context, inject) => {
     instance.defaults.headers.common['Authorization'] = 'Bearer ' + context.store.getters['authentication/token']
   }
 
+  instance.interceptors.request.use(function (config) {
+    // Do something before request is sent
+    config.url = config.url + '.json'
+    console.log('Request Interceptor', config)
+    return config
+  }, function (error) {
+    // Do something with request error
+    console.log('Request Interceptor Error', error)
+    return Promise.reject(error)
+  })
+
   instance.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    console.log('Interceptor OK', response)
+    console.log('Response Interceptor OK', response)
     return response
   }, function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    console.log('Interceptor Error', error)
+    console.log('Response Interceptor Error', error)
     context.redirect('/error/401'  )
     return Promise.reject(error)
   })

@@ -6,7 +6,8 @@
       <button @click="logout">Logout</button>
     </template>
     <template v-else> 
-      <button>  <NuxtLink to="/authentication">Authentication Page</NuxtLink></button>
+      <button>  <NuxtLink to="/signin">SignIn Page</NuxtLink></button>
+      <button>  <NuxtLink to="/signup">SignUp Page</NuxtLink></button>
     </template>
   </main>
 </template>

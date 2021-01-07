@@ -22,7 +22,7 @@ const actions = {
 
   async signUp({commit}, form) {
     try {
-      let response = await this.$railsAuthApi.post('signup.json', form)
+      let response = await this.$railsAuthApi.post('signup', form)
       console.log('signUp Response', response.data)
       this.$railsAuthApi.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
       commit('updateToken', response.data.token)
@@ -34,7 +34,7 @@ const actions = {
 
   async signIn({commit}, form) {
     try {
-      let response = await this.$railsAuthApi.post('login.json', form)
+      let response = await this.$railsAuthApi.post('login', form)
       console.log('signIn Response', response.data)
       this.$railsAuthApi.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
       commit('updateToken', response.data.token)
@@ -45,7 +45,7 @@ const actions = {
   },
   async logout({commit}) {
     try {
-      let response = await this.$railsAuthApi.delete('logout.json')
+      let response = await this.$railsAuthApi.delete('logout')
       console.log('logout Response', response.data)
       commit('updateToken', null)
       document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'

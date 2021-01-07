@@ -1,3 +1,5 @@
+import routes from './src/config/routes'
+
 export default {
   target: 'server',
   srcDir: 'src/',
@@ -38,20 +40,7 @@ export default {
     ]
   },
 
-  router: {
-    extendRoutes(routes, resolve) {
-      routes.push({
-        name: 'signIn',
-        path: '/signin',  
-        component: resolve(__dirname, 'src/pages/authentication/signIn.vue')
-      })
-      routes.push({
-        name: 'signUp',
-        path: '/signup',  
-        component: resolve(__dirname, 'src/pages/authentication/signUp.vue')
-      })
-    }
-  },
+  router: routes,
 
   /*
    ** Build configuration
