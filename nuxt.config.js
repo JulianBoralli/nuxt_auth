@@ -1,5 +1,5 @@
 export default {
-  mode: 'universal',
+  target: 'server',
   srcDir: 'src/',
   rootDir: './',
   head: {
@@ -37,6 +37,22 @@ export default {
       './styles/_variables.scss',
     ]
   },
+
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'signIn',
+        path: '/signin',  
+        component: resolve(__dirname, 'src/pages/authentication/signIn.vue')
+      })
+      routes.push({
+        name: 'signUp',
+        path: '/signup',  
+        component: resolve(__dirname, 'src/pages/authentication/signUp.vue')
+      })
+    }
+  },
+
   /*
    ** Build configuration
    */

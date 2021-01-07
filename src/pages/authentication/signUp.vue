@@ -1,7 +1,5 @@
 <template>
   <main>
-    <h1>SignIn</h1>
-    <app-sign-in-form></app-sign-in-form>
     <h1>SignUp</h1>
     <app-sign-up-form></app-sign-up-form>
     <button @click="logout">Logout</button>
@@ -9,12 +7,10 @@
 </template>
 
 <script>
-import SignInForm from '@/components/SignInForm'
 import SignUpForm from '@/components/SignUpForm'
 
 export default {
   components: {
-    appSignInForm: SignInForm,
     appSignUpForm: SignUpForm,
   },
   methods: {
