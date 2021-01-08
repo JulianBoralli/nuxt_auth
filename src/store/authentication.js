@@ -16,7 +16,8 @@ const actions = {
       console.log('getToken', token)
       commit('updateToken', token)
       this.$railsAuthApi.defaults.headers.common['Authorization'] = 'Bearer ' + token
-      console.log('railsAPi', this.$railsAuthApi.defaults.headers.common)
+      // Add code to check with API if Token is valid, for example: getUser code
+      // Only commit to store if token is valid, otherwise delete cookie and store data
     } 
   },
 
