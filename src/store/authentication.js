@@ -27,6 +27,7 @@ const actions = {
       this.$railsAuthApi.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
       commit('updateToken', response.data.token)
       document.cookie = 'token=' + response.data.token
+      this.$router.push('/')
     } catch (error) {
       console.log('signUp Error', error)
     }
@@ -39,6 +40,7 @@ const actions = {
       this.$railsAuthApi.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
       commit('updateToken', response.data.token)
       document.cookie = 'token=' + response.data.token
+      this.$router.push('/')
     } catch (error) {
       console.log('signIn Error', error)
     }
@@ -49,6 +51,7 @@ const actions = {
       console.log('logout Response', response.data)
       commit('updateToken', null)
       document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+      this.$router.push('/')
     } catch (error) {
       console.log('logout Error', error)
     }

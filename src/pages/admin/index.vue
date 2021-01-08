@@ -7,6 +7,7 @@
 
 <script>
 export default {
+  middleware: 'notAuthenticated',
   methods: 
   {
     logout() {
