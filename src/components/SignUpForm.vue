@@ -56,8 +56,11 @@ export default {
       }
     }
   },
-  methods: {
-    ...mapActions({ signUp: 'sessions/signUp'})  
+  methods: {  
+    signUp(formData) {
+      console.log('SignIn', formData.email)
+      this.$store.dispatch('authentication/signUp', formData)
+    }
   }
 }
 </script>
