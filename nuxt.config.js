@@ -1,5 +1,7 @@
+import routes from './src/config/routes'
+
 export default {
-  mode: 'universal',
+  target: 'server',
   srcDir: 'src/',
   rootDir: './',
   head: {
@@ -21,10 +23,11 @@ export default {
   },
 
   plugins: [
+    {src: '@/plugins/railsAuthApi.js'}
   ],
 
   modules: [
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
   ],
 
   buildModules: [
@@ -36,6 +39,9 @@ export default {
       './styles/_variables.scss',
     ]
   },
+
+  router: routes,
+
   /*
    ** Build configuration
    */
@@ -53,6 +59,17 @@ export default {
           exclude: /(node_modules)/
         })
       }
-    }
+    },
+    // extendPlugins(plugins) {
+    //   const pluginIndex = plugins.findIndex(
+    //     ({ src }) => src === '~/plugins/railsAuthApi.js'
+    //   )
+    //   const railsAuthApiPlugin = plugins[pluginIndex]
+  
+    //   plugins.splice(pluginIndex, 1)
+    //   plugins.unshift(railsAuthApiPlugin)
+  
+    //   return plugins
+    // }
   }
 }
