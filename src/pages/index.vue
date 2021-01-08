@@ -18,11 +18,7 @@ import { mapGetters } from 'vuex'
 export default {
   components: {
   },
-  data() {
-    return {
-      counter: 0
-    }
-  },
+  
   computed: {
     ...mapGetters('authentication', [
       'isLoggedIn'

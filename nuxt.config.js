@@ -28,12 +28,7 @@ export default {
 
   modules: [
     '@nuxtjs/style-resources',
-    '@nuxt/http'
   ],
-
-  http: {
-    baseUrl: 'http://localhost:3000/v1'
-  },
 
   buildModules: [
   ],
