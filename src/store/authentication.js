@@ -12,14 +12,27 @@ const mutations = {
 
 const actions = {
   // getToken runs only on the server and is initiated by nuxtServerInit
-  getToken({commit}, req) {
+  async getToken({commit}, req) {
     if (req.headers.cookie) {
-      // let token = req.headers.cookie.split('=')[1]
-      // console.log('getToken', token)
       let token = Cookie.getFromHttpRequest('token', req)
-      commit('updateToken', token)
-      this.$railsAuthApi.defaults.headers.common['Authorization'] = 'Bearer ' + token
+      try {
+        commit('updateToken', token)
+        this.$railsAuthApi.defaults.headers.common['Authorization'] = 'Bearer ' + token
+      } catch (error) {
+        console.log('getToken Error', error)
+      }
     } 
+  },
+
+  async validateAccess({state, commit}) {
+    if (state.token) {
+      try {
+        let response = await this.$railsAuthApi.get('validate_access')
+        commit('user/updateUser', response.data.id, { root: true })
+      } catch (error) {
+        console.log('signUp Error', error)
+      }
+    }
   },
 
   async signUp({commit}, form) {
@@ -28,6 +41,7 @@ const actions = {
       console.log('signUp Response', response.data)
       this.$railsAuthApi.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
       commit('updateToken', response.data.token)
+      commit('user/updateUser', response.data.id, { root: true })
       Cookie.set('token', response.data.token)
       // document.cookie = 'token=' + response.data.token
       this.$router.push('/')
@@ -42,6 +56,7 @@ const actions = {
       console.log('signIn Response', response.data)
       this.$railsAuthApi.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
       commit('updateToken', response.data.token)
+      commit('user/updateUser', response.data.id, { root: true })
       Cookie.set('token', response.data.token)
       // document.cookie = 'token=' + response.data.token
       this.$router.push('/')
@@ -54,6 +69,7 @@ const actions = {
       let response = await this.$railsAuthApi.delete('logout')
       console.log('logout Response', response.data)
       commit('updateToken', null)
+      commit('user/updateUser', null, { root: true })
       Cookie.remove('token')
       // document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
       this.$router.push('/')

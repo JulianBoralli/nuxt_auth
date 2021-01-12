@@ -35,6 +35,7 @@ export default (context, inject) => {
     if (error.response.status === 401) {
       console.log('Mutation', context.store)
       context.store.commit('authentication/updateToken', null)
+      context.store.commit('user/updateUser', null)
       document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
       context.redirect('/error/401')
     }
