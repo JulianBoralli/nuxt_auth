@@ -13,6 +13,7 @@ export default {
   components: {
     appSignInForm: SignInForm,
   },
+  middleware: 'authenticated', 
   methods: {
     logout() {
       this.$store.dispatch('authentication/logout')

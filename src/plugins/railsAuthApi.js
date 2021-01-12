@@ -32,7 +32,13 @@ export default (context, inject) => {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     console.log('Response Interceptor Error', error)
-    context.redirect('/error/401'  )
+    if (error.response.status === 401) {
+      console.log('Mutation', context.store)
+      context.store.commit('authentication/updateToken', null)
+      context.store.commit('user/updateUser', null)
+      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+      context.redirect('/error/401')
+    }
     return Promise.reject(error)
   })
 
